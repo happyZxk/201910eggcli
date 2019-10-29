@@ -9,7 +9,11 @@ module.exports = app => {
     user: { type: ObjectId, ref: 'User' },
     pv: { type: Number, default: 0 },
     comments: [
-      { user: { type: ObjectId, ref: 'User' }, content: String },
+      {
+        user: { type: ObjectId, ref: 'User' },
+        content: String,
+        creareAt: { type: Date, default: Date.now },
+      },
     ],
     creareAt: { type: Date, default: Date.now },
   });

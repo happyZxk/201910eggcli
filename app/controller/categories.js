@@ -4,18 +4,8 @@ module.exports = class CategoriesController extends BaseConstroller {
   // 获取分类列表
   async index() {
     // http://127.0.0.1:7001/api/categories?pageNum=1&pageSize=2&keyWord=服装
-    const { ctx } = this;
-    let { pageNum = 1, pageSize = 5, keyWord } = ctx.query || ctx.request.query;
-    pageNum = isNaN(pageNum) ? 1 : parseInt(pageNum);
-    pageSize = isNaN(pageSize) ? 5 : parseInt(pageSize);
-    const query = {};
-    if (keyWord) {
-      query.name = new RegExp(keyWord);
-    }
     try {
-      const items = await ctx.model.Category.find(query)
-        .skip((pageNum - 1) * pageSize)
-        .limit(pageSize);
+      const items = await this.getPager('Category', [ 'name' ]);
       this.success({ items });
     } catch (error) {
       this.error(error);

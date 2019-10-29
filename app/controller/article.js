@@ -3,17 +3,8 @@ const BaseController = require('./base');
 
 class ArticleController extends BaseController {
   async index() {
-    const { ctx } = this;
-    let { pageNum = 1, pageSize = 5, keyword = '' } = ctx.query;
-    pageNum = isNaN(pageNum) ? 1 : parseInt(pageNum);
-    pageSize = isNaN(pageSize) ? 5 : parseInt(pageSize);
-    const query = {};
-    if (keyword) {
-      query.$or = [{ title: new RegExp(keyword) }, { content: new RegExp(keyword) }];
-    }
     try {
-      const items = await ctx.model.Article.find(query)
-        .skip((pageNum - 1) * pageSize);
+      const items = await this.getPager('Article', [ 'title', 'content' ]);
       this.success(items);
     } catch (error) {
       this.error(error);
@@ -22,8 +13,10 @@ class ArticleController extends BaseController {
 
   async create() {
     const { ctx } = this;
+    let article = ctx.request.body;
     try {
-
+      article = await ctx.model.Article.create(article);
+      this.success('文章发表成功');
     } catch (error) {
       this.error(error);
     }
@@ -31,8 +24,11 @@ class ArticleController extends BaseController {
 
   async update() {
     const { ctx } = this;
+    const id = ctx.params.id;
+    const article = ctx.request.body;
     try {
-
+      await ctx.model.Article.findByIdAndUpdate(id, article);
+      this.success('更新文章成功');
     } catch (error) {
       this.error(error);
     }
@@ -40,8 +36,10 @@ class ArticleController extends BaseController {
 
   async destroy() {
     const { ctx } = this;
+    const id = ctx.params.id;
     try {
-
+      await ctx.model.Article.findByIdAndRemove(id);
+      this.success('删除文章成功');
     } catch (error) {
       this.error(error);
     }
