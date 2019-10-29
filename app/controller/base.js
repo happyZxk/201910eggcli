@@ -1,7 +1,7 @@
 'use strict';
 const { Controller } = require('egg');
 module.exports = class BaseConstroller extends Controller {
-  get user() {
+  get user11() {
     return this.ctx.user.sission;
   }
   success(data) {
