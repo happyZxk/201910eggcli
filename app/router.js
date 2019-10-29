@@ -17,6 +17,7 @@ module.exports = app => {
    * router.put('categories', '/api/categories/:id', controller.categories.update);
    * router.delete('categories', '/api/categories/:id', controller.categories.destroy);
    */
+  router.resources('article', '/api/article', controller.article);
 
 
 };
