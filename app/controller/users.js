@@ -40,6 +40,8 @@ class UserConstroler extends BaseConstroller {
     const { ctx } = this;
     ctx.session.user = null;
     this.success('退出成功');
+    
+    console.log(5555);
   }
 }
 
