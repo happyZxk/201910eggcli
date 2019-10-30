@@ -14,9 +14,9 @@ module.exports = class BaseConstroller extends Controller {
     if (keyword && fields.length > 0) {
       query.$or = fields.map(field => ({ [field]: new RegExp(keyword) }));
     }
-    return await ctx.model[modName].find(query).
-      skip((pageNum - 1) * pageSize).
-      limit(pageSize);
+    return await ctx.model[modName].find(query)
+      .skip((pageNum - 1) * pageSize)
+      .limit(pageSize);
   }
 
   success(data) {

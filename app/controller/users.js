@@ -39,8 +39,8 @@ class UserConstroler extends BaseConstroller {
   async signout() {
     const { ctx } = this;
     ctx.session.user = null;
+    console.log(55656);
     this.success('退出成功');
-    
     console.log(5555);
   }
 }
